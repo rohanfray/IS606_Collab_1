@@ -21,6 +21,7 @@
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
 \usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs}
 \usepackage{graphicx}
 % Redefine \includegraphics so that, unless explicit options are
 % given, the image width will not exceed the width of the page.
@@ -77,7 +78,7 @@
 \normalsize
 
 
-\subsubsection{Initial Thoughts}\label{initial-thoughts}
+\subsubsection{Preliminary Analysis}\label{preliminary-analysis}
 
 After plotting histograms and scatterplots of the historical data, it
 was evident that:
@@ -85,20 +86,24 @@ was evident that:
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  Demand fluctuated heavily day to day
+  Demand can be modeled as a random variable.
 \item
-  James was often undersupplying all types of sandwiches (i.e.~demand
-  \textgreater{} supply)
+  Very often sandwich demand exceeded supply.
 \item
-  There were no imminent customer patterns based on day of sale (e.g
-  first day of each week had XX sales) or sandwich conditionality
-  (e.g.~if previous day sold X, next day would sell Y)
+  Daily sandwich demand was independent of previous demand.
+\item
+  Customer orders are independent of each other during the course of the
+  day.
 \item
   No obvious long-term demand trend upwards or downwards (linear
   regression, $a<.02$ and $r2<.0001$ for all types)
 \end{itemize}
 
-See Appendix:Initial Graphs
+\subsubsection{Initial Graphs}\label{initial-graphs}
+
+\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-21.pdf}
+\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-22.pdf}
+\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-23.pdf}
 
 \subsubsection{Objective}\label{objective}
 
@@ -110,18 +115,19 @@ supply.
 
 Sandwiches sold is a discrete variable and therefore can be estimated
 using a probability mass function. We forecasted demand using two
-different probability distributions, namely:
+different probability distributions. The first was to use the historical
+frequency: This distribution would match the probability ($X=x$) of the
+preceding period.
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Historical frequency: This distribution would match the probability
-  ($X=x$) of the preceding period.
-\item
-  Poisson distribution: This is an applicable distribution because we
-  want the probability of a discrete number of occurences in a fixed
-  period of time (i.e.~sandwiches sold in a day)
-\end{enumerate}
+\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-3.pdf}
+
+The second one is based on the frequency distribtutions suggest a
+probability distribution. Since, there is no constraint on the number of
+events and the outcomes are independent, we chose Poisson distribution
+as a candidate. In order to use Poisson distribution, we calculated
+lambda from historica data that gave us sandwich demand per day.
+
+\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-4.pdf}
 
 James previously supplied sandwiches at a mostly fixed amount. We used a
 fixed supply model for the historical distribution but modeled the
@@ -156,7 +162,8 @@ always met demand every day.
   helpers, more preparation space/tools)
 \item
   Supply goes to waste if not sold in a day. We vary this assumption in
-  our second Poisson distribution model\\
+  our second Poisson distribution model in that unsold sandwiches are
+  reused (and thus increase future supply).
 \end{itemize}
 
 \subsubsection{Profit Results}\label{profit-results}
@@ -167,20 +174,21 @@ always met demand every day.
 Given James' actual supply and demand over the 130-day period, he
 achieved the following:
 
-\begin{table}[!htbp]
-  \label{} 
-\begin{tabular}{@{\extracolsep{5pt}} ccccc} 
-\\[-1.8ex]\hline 
-\hline \\[-1.8ex] 
-type & revenue & cost & profit \\ 
-\hline \\[-1.8ex] 
-ham & $12,012$ & $7,175$ & $4,837$ \\ 
-turkey & $14,066$ & $8,960$ & $5,106$ \\ 
-veggie & $5,960$ & $3,075$ & $2,885$ \\ 
-total & $32,038$ & $19,210$ & $12,828$ \\ 
-\hline \\[-1.8ex] 
-\end{tabular} 
-\end{table}
+\begin{longtable}[c]{@{}llll@{}}
+\toprule\addlinespace
+Type & Revenue & Cost & Profit
+\\\addlinespace
+\midrule\endhead
+Ham & \$12,012 & \$7,175 & \$4,837
+\\\addlinespace
+Turkey & \$14,066 & \$8,960 & \$5,106
+\\\addlinespace
+Veggie & \$5,960 & \$3,075 & \$2,885
+\\\addlinespace
+Total & \$32,038 & \$19,210 & \$12,828
+\\\addlinespace
+\bottomrule
+\end{longtable}
 
 \paragraph{B) Historical Probability Distribution -
 \$13,858}\label{b-historical-probability-distribution---13858}
@@ -197,75 +205,108 @@ supply per day is equal to the expected value, which under a specific
 frequency distribution is the highest frequency value (ham: $n=15$
 $p=0.123$, turkey: $n=20$ $p=0.1$, veggie: $n=13$ $p=.138$).
 
-\begin{table}[!htbp]
-  \label{} 
-\begin{tabular}{@{\extracolsep{5pt}} ccccc} 
-\\[-1.8ex]\hline 
-\hline \\[-1.8ex] 
-type & revenue & cost & profit \\ 
-\hline \\[-1.8ex] 
-ham & $11,765$ & $6,825$ & $4,940$ \\ 
-turkey & $16,003$ & $10,400$ & $5,603$ \\ 
-veggie & $7,540$ & $4,225$ & $3,315$ \\ 
-total & $35,308$ & $21,450$ & $13,858$ \\ 
-\hline \\[-1.8ex] 
-\end{tabular} 
-\end{table}
+\begin{longtable}[c]{@{}llll@{}}
+\toprule\addlinespace
+Type & Revenue & Cost & Profit
+\\\addlinespace
+\midrule\endhead
+ham & \$11,765 & \$6,825 & \$4,940
+\\\addlinespace
+turkey & \$16,003 & \$10,400 & \$5,603
+\\\addlinespace
+veggie & \$7,540 & \$4,225 & \$3,315
+\\\addlinespace
+total & \$35,308 & \$21,450 & \$13,858
+\\\addlinespace
+\bottomrule
+\end{longtable}
 
-\textbf{(insert charts - frequency distribution, marginal profit
-curve?)}
+\paragraph{C) Poisson Distribution - Fixed Supply Without Storage
+(unsold sandwiches are
+wasted)}\label{c-poisson-distribution---fixed-supply-without-storage-unsold-sandwiches-are-wasted}
 
-\paragraph{C) Poisson Distribution - Fixed
-Supply}\label{c-poisson-distribution---fixed-supply}
+We assume that James will bring in a fixed amount every day and has no
+way to store excess sandwiches. We choose 3 different models:
 
-\textbf{include that lambda = expected value = optimum supply level}
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Using the lowest numbers from the data: 14 ham, 14 turkey, and 8
+  veggie sandwiches
+\item
+  Using the higher numbers from the data: 18 ham, 20 turkey, and 10
+  veggie sandwiches
+\item
+  Using the mean demand for each sandwich from the data: 16 ham, 22
+  turkey, and 13 veggie sandwiches
+\end{itemize}
 
-\subparagraph{Without Storage (unsold sandwiches are
-wasted)}\label{without-storage-unsold-sandwiches-are-wasted}
+Note: we do not show maximum demand model on this graph, since with no
+storage, this reduces profits by a significantly wide margin.
 
-\begin{verbatim}
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-\end{verbatim}
+\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-8.pdf}
 
-\begin{verbatim}
-## Warning: position_stack requires constant width: output may be incorrect
-## Warning: position_stack requires constant width: output may be incorrect
-## Warning: position_stack requires constant width: output may be incorrect
-\end{verbatim}
+\paragraph{D) Fixed Supply With Storage (unsold sandwiches are put back
+into
+supply)}\label{d-fixed-supply-with-storage-unsold-sandwiches-are-put-back-into-supply}
 
-\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-2.pdf}
+We assume that James will bring in a fixed amount every day but this
+time does have a wat store excess sandwiches. We choose 4 different
+models:
 
-\subparagraph{With Storage (unsold sandwiches are put back into
-supply)}\label{with-storage-unsold-sandwiches-are-put-back-into-supply}
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Using the lowest numbers from the data: 14 ham, 14 turkey, and 8
+  veggie sandwiches
+\item
+  Using the higher numbers from the data: 18 ham, 20 turkey, and 10
+  veggie sandwiches
+\item
+  Using the mean demand for each sandwich from the data: 16 ham, 22
+  turkey, and 13 veggie sandwiches
+\item
+  Using the maximum demand model for each sandwich from the data: 25
+  ham, 37 turkey, and 24 veggie sandwiches
+\end{itemize}
 
-\paragraph{D) Poisson Distribution - Variable
-Supply}\label{d-poisson-distribution---variable-supply}
+\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-9.pdf}
 
 \paragraph{E) Gold Standard - \$17,631}\label{e-gold-standard---17631}
 
-This is the profit that would have been made if supply=demand each day
-so that no sandwich was wasted and every customer was satisfied.
-Comparing the previous methods as percent of gold standard achieved, we
-see the poisson variable supply model yielded XX\% while the poisson
-fixed model and historical probability model yielded XX\% and $78.6\%$,
-respectively.
+This is the profit that would have been made if supply = demand each day
+(variable supply model) so that no sandwich was wasted and every
+customer was satisfied. Comparing the previous methods as percent of
+gold standard achieved, we see the ``fixed supply at average demand, no
+storage model'' yielded \textbf{78.2431\%} while the ``fixed supply at
+average demand, storage model'' yielded \textbf{89.2119\%}.
 
 \subsubsection{Recommendations}\label{recommendations}
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  If fixed supply, produce at rate of expected value
+  If using a fixed supply with no storage, then it should be set to
+  expected value of each demand variable (i.e., supply of ham, turkey
+  and veggie sandwiches should be 16, 22, 13, respectively). This will
+  show an immediate increase in profits.
 \item
   Poisson distribution fit historical data very well - can use as
   distribution function going forward
 \item
-  Consider investing in fridge, etc. to prolong product shelf life
+  Consider investing in fridge, etc. to prolong product shelf life.
+  Without storage, when you over-shoot on supply (i.e.~customer demand
+  is to the left of the mean), you lose money in waste. Having storage
+  allows you to overshoot without having to bear that extra cost.
 \item
-  Being able to carry over supply day-to-day greatly increase expected
+  Being able to carry over supply day-to-day greatly increases expected
   profit
+\item
+  If overestimating demand, we recommend veggie because the profit
+  margin is the same as turkey but the cost is the least.
+\item
+  If underestimate demand, we recommend turkey because the cost is the
+  highest but the profit is same as veggie.
 \end{itemize}
 
 \subsubsection{Limitations}\label{limitations}
@@ -284,13 +325,5 @@ respectively.
 \item
   In variable model, 3-day old sandwich is as `desirable' as fresh one
 \end{itemize}
-
-\section{Appendix}\label{appendix}
-
-\subsubsection{Initial Graphs}\label{initial-graphs}
-
-\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-41.pdf}
-\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-42.pdf}
-\includegraphics{./IS606_Sandwich_files/figure-latex/unnamed-chunk-43.pdf}
 
 \end{document}
