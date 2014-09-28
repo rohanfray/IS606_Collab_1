@@ -5,7 +5,7 @@ Brian C., James Q., Rohan F., Sharad G.
 
 ### Preliminary Analysis
 
-After plotting histograms and scatterplots of the historical data, it was evident that:  
+After plotting histograms and scatter plots of the historical data, it was evident that:  
 
 * Demand can be modeled as a random variable.
 * Very often sandwich demand exceeded supply.
@@ -25,18 +25,18 @@ To maximize total sandwich profits over a 130-day period by estimating probabili
 
 ### General Strategy
 
-Sandwiches sold is a discrete variable and therefore can be estimated using a probability mass function. We forecasted demand using two different probability distributions. The first was to use the historical frequency: This distribution would match the probability ($X=x$) of the preceding period. 
+Sandwiches sold is a discrete variable and therefore can be estimated using a probability mass function. We forecast demand using two different probability distributions. The first was to use the historical frequency: This distribution would match the probability ($X=x$) of the preceding period. 
 
 
 ![plot of chunk unnamed-chunk-3](./IS606_Sandwich_files/figure-html/unnamed-chunk-3.png) 
 
-The second one is based on the frequency distribtutions suggest a probability distribution. Since, there is no constraint on the number of events and the outcomes are independent, we chose Poisson distribution as a candidate. In order to use Poisson distribution, we calculated lambda from historica data that gave us sandwich demand per day.
+The second one is based on the frequency distributions suggest a probability distribution. Since, there is no constraint on the number of events and the outcomes are independent, we chose Poisson distribution as a candidate. In order to use Poisson distribution, we calculated lambda from historical data that gave us sandwich demand per day.
 
 ![plot of chunk unnamed-chunk-4](./IS606_Sandwich_files/figure-html/unnamed-chunk-4.png) 
 
-James previously supplied sandwiches at a mostly fixed amount. We used a fixed supply model for the historical distribution but modeled the poisson distribution under both fixed and variable supply assumptions.
+James previously supplied sandwiches at a mostly fixed amount. We used a fixed supply model for the historical distribution but modeled the Poisson distribution under both fixed and variable supply assumptions.
 
-A 130-day period was chosen to match the timeline of the given data. This allows for direct benchmarking (given below assumptions) against 1) profits that James actually made in the preceding 130 days, and 2) a gold standard profit margin that was achievable over 130 days if supply always met demand every day.
+A 130-day period was chosen to match the timeline of the given data. This allows for direct bench-marking (given below assumptions) against 1) profits that James actually made in the preceding 130 days, and 2) a gold standard profit margin that was achievable over 130 days if supply always met demand every day.
 
 ### General Assumptions
 
@@ -91,7 +91,7 @@ Note: we do not show maximum demand model on this graph, since with no storage, 
 
 #### D) Fixed Supply With Storage (unsold sandwiches are put back into supply)
 
-We assume that James will bring in a fixed amount every day but this time does have a wat store excess sandwiches. We choose 4 different models:
+We assume that James will bring in a fixed amount every day but this time does have a way to store excess sandwiches. We choose 4 different models:
 
   * Using the lowest numbers from the data: 14 ham, 14 turkey, and 8 veggie sandwiches
   * Using the higher numbers from the data: 18 ham, 20 turkey, and 10 veggie sandwiches
